@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>C++ – Napredni zadaci (CPP6)</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"><style>
+#exerciseDescription math { font-size: 1.25em; math-style: normal; margin-inline: .12em; white-space: nowrap; }
+#exerciseDescription { line-height: 1.85; }
+</style></head>
+<body><div class="container mt-3">
+<div class="mb-3"><label for="exerciseSelector" class="form-label">Odaberi zadatak:</label>
+<select id="exerciseSelector" class="form-select" onchange="loadExercise()">
+      <option value="1">🔴 Zadatak 1: Prosti brojevi</option>
+      <option value="2">🔴 Zadatak 2: Dolari u kovanicama</option>
+      <option value="3">🟠 Zadatak 3: Najviša temperatura na lokalitetima</option>
+      <option value="4">🟢 Zadatak 4: Zbir dnevnih prihoda</option>
+      <option value="5">🟠 Zadatak 5: Prosjek ocjena</option>
+      <option value="6">🔴 Zadatak 6: Prihodi i rashodi</option>
+      <option value="7">🔴 Zadatak 7: Formula 1</option>
+      <option value="8">🟠 Zadatak 8: Susret automobila</option>
+      <option value="9">🟢 Zadatak 9: Kusur</option>
+      <option value="10">🟠 Zadatak 10: Ponavljanje riječi</option>
+      <option value="11">🔴 Zadatak 11: DNK niz</option>
+      <option value="12">🔴 Zadatak 12: Prosti brojevi lista 1</option>
+      <option value="13">🔴 Zadatak 13: Prosti brojevi lista 2</option>
+      <option value="14">🟠 Zadatak 14: Najveća brzina</option>
+      <option value="15">🟠 Zadatak 15: Samoglasnik a</option>
+      <option value="16">🔴 Zadatak 16: Palindrom</option>
+</select></div>
+<div id="exerciseDescription" class="alert alert-info"></div>
+<iframe title="C++ online kompajler" src="https://onecompiler.com/cpp" width="100%" height="600px"></iframe>
+<div class="d-flex justify-content-between mt-3"><button class="btn btn-success" onclick="runExample()">Primjeri ispisa</button></div>
+<div id="output" class="mt-3 alert alert-secondary" style="white-space: pre-wrap; overflow-wrap: anywhere;" aria-live="polite">Output će biti prikazan u ovom polju...</div>
+</div><script>
+const exercises = {
+  "1": {
+    "title": "Prosti brojevi",
+    "description": "Korisnik unosi broj n i ispisuju se svi prosti brojevi manji ili jednaki od n.",
+    "sampleInput": [
+      "4",
+      "7",
+      "12",
+      "20",
+      "37"
+    ],
+    "expectedOutput": [
+      "2 3",
+      "2 3 5 7",
+      "2 3 5 7 11",
+      "2 3 5 7 11 13 17 19",
+      "2 3 5 7 11 13 17 19 23 29 31 37"
+    ],
+    "level": 2,
+    "descriptionHtml": "Korisnik unosi broj <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> i ispisuju se svi prosti brojevi manji ili jednaki od <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math>."
+  },
+  "2": {
+    "title": "Dolari u kovanicama",
+    "description": "Unijeti nenegativan iznos u dolarima sa najviše dvije decimale. Pretvoriti ga u cente (zaokružiti na cijeli broj) i ispisati najmanji broj kovanica apoena 50, 25, 10, 5 i 1 cent.",
+    "sampleInput": [
+      "2.81",
+      "3.81",
+      "3.85",
+      "3.5",
+      "0.04"
+    ],
+    "expectedOutput": [
+      "8",
+      "10",
+      "9",
+      "7",
+      "4"
+    ],
+    "level": 2,
+    "descriptionHtml": "Unijeti nenegativan iznos u dolarima sa najviše dvije decimale. Pretvoriti ga u cente (zaokružiti na cijeli broj) i ispisati najmanji broj kovanica apoena 50, 25, 10, 5 i 1 cent."
+  },
+  "3": {
+    "title": "Najviša temperatura na lokalitetima",
+    "description": "Tokom terenskog obilaska kulturno-historijskih lokaliteta BiH unose se izmjerene nenulte cijele temperature u °C sve dok se ne unese nula. Ispisati najveću unesenu temperaturu. Pretpostaviti da je unesena najmanje jedna temperatura.",
+    "sampleInput": [
+      "10 9 5 0",
+      "2 3 6 0",
+      "10 14 7 0",
+      "25 19 17 0",
+      "-2 -7 -13 0"
+    ],
+    "expectedOutput": [
+      "10",
+      "6",
+      "14",
+      "25",
+      "-2"
+    ],
+    "level": 1,
+    "descriptionHtml": "Tokom terenskog obilaska kulturno-historijskih lokaliteta BiH unose se izmjerene nenulte cijele temperature u °C sve dok se ne unese nula. Ispisati najveću unesenu temperaturu. Pretpostaviti da je unesena najmanje jedna temperatura."
+  },
+  "4": {
+    "title": "Zbir dnevnih prihoda",
+    "description": "Unose se dnevni prihodi u cijelim KM sve do unosa nule. Ispisati zbir prihoda.",
+    "sampleInput": [
+      "2 10 14 0",
+      "10 10 10 0",
+      "29 30 50 0",
+      "70 30 100 0",
+      "150 110 120 0"
+    ],
+    "expectedOutput": [
+      "26",
+      "30",
+      "109",
+      "200",
+      "380"
+    ],
+    "level": 0,
+    "descriptionHtml": "Unose se dnevni prihodi u cijelim KM sve do unosa nule. Ispisati zbir prihoda."
+  },
+  "5": {
+    "title": "Prosjek ocjena",
+    "description": "Unosi se broj n (n > 0), zatim n ocjena od 1 do 5. Ispisati aritmetičku sredinu ocjena, bez zaokruživanja na cijelu ocjenu.",
+    "sampleInput": [
+      "2 3 5",
+      "3 4 4 4",
+      "5 1 1 2 2 1",
+      "4 1 3 2 2",
+      " 3 3 3 3"
+    ],
+    "expectedOutput": [
+      "4",
+      "4",
+      "1.4",
+      "2",
+      "3"
+    ],
+    "level": 1,
+    "descriptionHtml": "Unosi se broj <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> (<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n &gt; 0\"><mrow><mi>n</mi><mo>&gt;</mo><mn>0</mn></mrow></math>), zatim <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> ocjena od 1 do 5. Ispisati aritmetičku sredinu ocjena, bez zaokruživanja na cijelu ocjenu."
+  },
+  "6": {
+    "title": "Prihodi i rashodi",
+    "description": "Unose se m i n (0 < m < n), zatim n iznosa. Prvih m predstavljaju prihode, ostali rashode. Ispisati razliku zbira prihoda i zbira rashoda.",
+    "sampleInput": [
+      "7 10 1 1 1 1 1 1 1 3 3 3",
+      "2 4 10 20 5 3"
+    ],
+    "expectedOutput": [
+      "-2",
+      "22"
+    ],
+    "level": 2,
+    "descriptionHtml": "Unose se <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"m\"><mrow><mi>m</mi></mrow></math> i <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> (<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"0 &lt; m &lt; n\"><mrow><mn>0</mn><mo>&lt;</mo><mi>m</mi><mo>&lt;</mo><mi>n</mi></mrow></math>), zatim <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> iznosa. Prvih <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"m\"><mrow><mi>m</mi></mrow></math> predstavljaju prihode, ostali rashode. Ispisati razliku zbira prihoda i zbira rashoda."
+  },
+  "7": {
+    "title": "Formula 1",
+    "description": "Unosi se n, a zatim n brojeva a₁, a₂, …, aₙ. Izračunati naizmjenični zbir a₁ − a₂ + a₃ − a₄ + … (neparni indeksi se sabiraju, parni oduzimaju).",
+    "sampleInput": [
+      "7 1 2 1 2 1 2 1"
+    ],
+    "expectedOutput": [
+      "-2"
+    ],
+    "level": 2,
+    "descriptionHtml": "Unosi se <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math>, a zatim <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> brojeva <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"a₁, a₂, …, aₙ\"><mrow><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>a</mi><mi>n</mi></msub></mrow></math>. Izračunati naizmjenični zbir <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"a₁ − a₂ + a₃ − a₄ + …\"><mrow><msub><mi>a</mi><mn>1</mn></msub><mo>−</mo><msub><mi>a</mi><mn>2</mn></msub><mo>+</mo><msub><mi>a</mi><mn>3</mn></msub><mo>−</mo><msub><mi>a</mi><mn>4</mn></msub><mo>+</mo><mo>…</mo></mrow></math> (neparni indeksi se sabiraju, parni oduzimaju)."
+  },
+  "8": {
+    "title": "Susret automobila",
+    "description": "Dva automobila istovremeno kreću jedan prema drugom iz dva grada. Unose se udaljenost u km i dvije pozitivne brzine u km/h. Ispisati vrijeme do susreta u satima i puteve oba automobila u km.",
+    "sampleInput": [
+      "150 50 50"
+    ],
+    "expectedOutput": [
+      "1.5 75 75"
+    ],
+    "level": 1,
+    "descriptionHtml": "Dva automobila istovremeno kreću jedan prema drugom iz dva grada. Unose se udaljenost u km i dvije pozitivne brzine u km/h. Ispisati vrijeme do susreta u satima i puteve oba automobila u km."
+  },
+  "9": {
+    "title": "Kusur",
+    "description": "Napisati program koji pomaže kasirki da vrati kusur na osnovu cijene i količine kupljenog artikla i količine novca koju je kupac dao (pretpostavlja se da je kupljena samo jedna vrsta proizvoda). Kao rezultat treba ispisati koliki kusur treba da vrati kasirka.",
+    "sampleInput": [
+      "5.8 1 10",
+      "10 1 100",
+      "2.5 4 20"
+    ],
+    "expectedOutput": [
+      "4.2",
+      "90",
+      "10"
+    ],
+    "level": 0,
+    "descriptionHtml": "Napisati program koji pomaže kasirki da vrati kusur na osnovu cijene i količine kupljenog artikla i količine novca koju je kupac dao (pretpostavlja se da je kupljena samo jedna vrsta proizvoda). Kao rezultat treba ispisati koliki kusur treba da vrati kasirka."
+  },
+  "10": {
+    "title": "Ponavljanje riječi",
+    "description": "Učitati riječ sa tastature. Ispisati je onoliko puta koliko ima slova.",
+    "sampleInput": [
+      "Patka",
+      "Mis"
+    ],
+    "expectedOutput": [
+      "Patka Patka Patka Patka Patka",
+      "Mis Mis Mis"
+    ],
+    "level": 1,
+    "descriptionHtml": "Učitati riječ sa tastature. Ispisati je onoliko puta koliko ima slova."
+  },
+  "11": {
+    "title": "DNK niz",
+    "description": "Simulirati niz DNK dužine n koju korisnik unosi, nasumičnim odabirom znakova A, T, G i C. Ispisati dobijeni niz.",
+    "sampleInput": [
+      "4",
+      "7"
+    ],
+    "expectedOutput": [
+      "ATTT",
+      "AGCCTTA"
+    ],
+    "random": true,
+    "level": 2,
+    "descriptionHtml": "Simulirati niz DNK dužine <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> koju korisnik unosi, nasumičnim odabirom znakova A, T, G i C. Ispisati dobijeni niz."
+  },
+  "12": {
+    "title": "Prosti brojevi lista 1",
+    "description": "Unijeti n, zatim n cijelih brojeva. Ispisati sve proste brojeve među unesenim brojevima redoslijedom unosa.",
+    "sampleInput": [
+      "6 3 4 50 10 7 13"
+    ],
+    "expectedOutput": [
+      "3 7 13"
+    ],
+    "level": 2,
+    "descriptionHtml": "Unijeti <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math>, zatim <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> cijelih brojeva. Ispisati sve proste brojeve među unesenim brojevima redoslijedom unosa."
+  },
+  "13": {
+    "title": "Prosti brojevi lista 2",
+    "description": "Unijeti n, zatim n cijelih brojeva. Ispisati posljednji uneseni prosti broj. Ako ga nema, ispisati Nema.",
+    "sampleInput": [
+      "7 1 3 2 4 10 7 13"
+    ],
+    "expectedOutput": [
+      "13"
+    ],
+    "level": 2,
+    "descriptionHtml": "Unijeti <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math>, zatim <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"n\"><mrow><mi>n</mi></mrow></math> cijelih brojeva. Ispisati posljednji uneseni prosti broj. Ako ga nema, ispisati Nema."
+  },
+  "14": {
+    "title": "Najveća brzina",
+    "description": "Unose se pozitivne brzine u km/h sve do unosa nule. Ispisati najveću brzinu. Pretpostaviti da je unesena najmanje jedna brzina.",
+    "sampleInput": [
+      "1 10 23 40 120 24 200 0"
+    ],
+    "expectedOutput": [
+      "200"
+    ],
+    "level": 1,
+    "descriptionHtml": "Unose se pozitivne brzine u km/h sve do unosa nule. Ispisati najveću brzinu. Pretpostaviti da je unesena najmanje jedna brzina."
+  },
+  "15": {
+    "title": "Samoglasnik a",
+    "description": "Unijeti jednu riječ napisanu malim slovima bez dijakritike. Ispisati koliko se puta pojavljuje slovo a.",
+    "sampleInput": [
+      "patka",
+      "nutella",
+      "banana"
+    ],
+    "expectedOutput": [
+      "2",
+      "1",
+      "3"
+    ],
+    "level": 1,
+    "descriptionHtml": "Unijeti jednu riječ napisanu malim slovima bez dijakritike. Ispisati koliko se puta pojavljuje slovo a."
+  },
+  "16": {
+    "title": "Palindrom",
+    "description": "Unijeti jednu riječ malim slovima bez dijakritike. Provjeriti čita li se jednako slijeva nadesno i zdesna nalijevo.",
+    "sampleInput": [
+      "patka",
+      "ana",
+      "radar"
+    ],
+    "expectedOutput": [
+      "Nije palindrom",
+      "Jest palindrom",
+      "Jest palindrom"
+    ],
+    "level": 2,
+    "descriptionHtml": "Unijeti jednu riječ malim slovima bez dijakritike. Provjeriti čita li se jednako slijeva nadesno i zdesna nalijevo."
+  }
+};
+function loadExercise() { const e=exercises[document.getElementById('exerciseSelector').value]; document.getElementById('exerciseDescription').innerHTML=e.descriptionHtml; document.getElementById('output').textContent='Output će biti prikazan u ovom polju...'; }
+function runExample() { const e=exercises[document.getElementById('exerciseSelector').value]; const blocks=e.expectedOutput.map((v,i)=> (e.sampleInput.length ? 'Ulaz: '+e.sampleInput[i]+'\n' : 'Bez unosa\n')+'Izlaz:\n'+v); document.getElementById('output').textContent=(e.random?'Mogući ispis (rezultat se može razlikovati):\n\n':'')+blocks.join('\n\n'); }
+loadExercise();
+</script></body></html>
